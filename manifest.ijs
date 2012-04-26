@@ -1,14 +1,14 @@
-NB. gtkdoctag manifest
+NB. json manifest
 
 CAPTION=: 'json'
 
 DESCRIPTION=: 0 : 0
-json encoder/parser.
+json encoder/decoder.
 )
 
 VERSION=: ''
 
-RELEASE=: 'j701'
+RELEASE=: 'j602 j701'
 
 FILES=: 0 : 0
 json.ijs

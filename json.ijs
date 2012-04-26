@@ -16,7 +16,7 @@ words=: (0;(0 10#:10*".;._2]0 :0);classes)&;:
 
 tokens=. ;:'[ ] , { } :'
 actions=: lBra`rBracket`comma`lBra`rBracket`colon`value
-fromJson=: 0 {:: (,a:) ,&.> [: actions @.(tokens&i.@[)/ [:|.a:,words
+dec_json=: 0 {:: (,a:) ,&.> [: actions @.(tokens&i.@[)/ [:|.a:,words
 
 lBra=: a: ,~ ]
 rBracket=: _2&}.@], [:< _2&{::@], _1&{@]
@@ -47,5 +47,5 @@ splitbs=: (0;(0 10#:10*".;._2]0 :0);(a.e.hexchars)+(2*a.='\')+3*a.e.'Uu')&;:
  1.2  3.0  2.2 1.2
 )
 evalbs=: [:; [:subst2 [:subst6 splitbs^:(*@#)
-fromJson_z_=: fromJson_json_
-toJson_z_=: toJson_json_
+dec_json_z_=: dec_json_json_
+enc_json_z_=: enc_json_json_
