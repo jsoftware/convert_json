@@ -2,3 +2,7 @@ convert/json - change history
 
 == 1.0.0 ==
  * initial import
+
+== 1.0.1 ==
+ * escape non-ascii
+ * add verbs emptyhash_json emptyarray_json

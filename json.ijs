@@ -1,5 +1,3 @@
-require 'strings'
-
 coclass 'json'
 enc_json=: 3 : 0
 select. t=. 3!:0 y
@@ -8,7 +6,7 @@ case. 2;131072 do.
   elseif. y-:'json_false' do. 'false'
   elseif. y-:'json_null' do. 'null'
   elseif. do.
-    '"', '"',~ jsonesc utf8 ,y
+    '"', '"',~ jsonesc utf8^:(131072=t) ,y
   end.
 case. 1;4;8 do.
   ":!.17 {.,y
@@ -50,6 +48,12 @@ if. 1 e. msk do.
   ndx=. , ((I. msk) + i. +/ msk) +/ 0 1
   new=. , '\',.JSONESC1 {~ JSONESC0 i. msk#txt
   txt=. new ndx } (1 + msk) # txt
+end.
+msk=. -. txt e. JSONASC
+if. 1 e. msk do.
+  new=. 'u',"1 '0123456789abcdef' {~ 16 16 16 16 #: a. i. msk # txt
+  ndx=., ((I. msk) + 5 * i. +/ msk) +/ i. 6
+  txt=. (, '\',("1) new) ndx } (1 + msk * 5) # txt
 end.
 txt
 )
@@ -98,7 +102,7 @@ token=: 3 : 0
 )
 
 dec_json=: 3 : 0
-T=: words y rplc LF;' '
+T=: words (LF,' ') charsub y-.CR
 I=: 0
 >getVal token''
 )
@@ -143,6 +147,14 @@ else.
   _1
 end.
 )
+emptyhash_json=: 3 : 0
+(2=$$y) *. (0={.$y) *. 32=3!:0 y
+)
+emptyarray_json=: 3 : 0
+(2>$$y) *. (0=#y) *. 32=3!:0 y
+)
 dec_json_z_=: dec_json_json_
 enc_json_z_=: enc_json_json_
 gethash_json_z_=: gethash_json_json_
+emptyhash_json_z_=: emptyhash_json_json_
+emptyarray_json_z_=: emptyarray_json_json_

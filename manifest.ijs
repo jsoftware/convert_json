@@ -8,7 +8,7 @@ json encoder/decoder.
 http://json.org/
 )
 
-VERSION=: '1.0.0'
+VERSION=: '1.0.1'
 
 RELEASE=: 'j602 j701'
 
