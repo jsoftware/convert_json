@@ -1,6 +1,58 @@
-require 'regex'
+require 'strings'
 
 coclass 'json'
+enc_json=: 3 : 0
+select. t=. 3!:0 y
+case. 2;131072 do.
+  if. y-:'json_true' do. 'true'
+  elseif. y-:'json_false' do. 'false'
+  elseif. y-:'json_null' do. 'null'
+  elseif. do.
+    '"', '"',~ jsonesc utf8 ,y
+  end.
+case. 1;4;8 do.
+  ":!.17 {.,y
+case. 32 do.
+  if. 2>$$y do.
+    if. 0=#y do.
+      '[]'
+    else.
+      s=. '['
+      for_v. y do.
+        s=. s , ',',~ enc_json >v
+      end.
+      ']',~ }:s
+    end.
+  elseif. 2=$$y do.
+    assert. 0 2 e.~ {.$y
+    if. 0=#y do.
+      '{}'
+    else.
+      s=. '{'
+      for_i. i.{:$y do.
+        s=. s , ':',~ enc_json (<0,i){::y
+        s=. s , ',',~ enc_json (<1,i){::y
+      end.
+      '}',~ }:s
+    end.
+  elseif. do. 13!:8[3
+  end.
+case. do. 13!:8[3
+end.
+)
+JSONESC0=: LF, CR, TAB, FF, (8{a.), '\/"'
+JSONESC1=: 'nrtfb\/"'
+JSONASC=: JSONESC0, 32}.127{.a.
+jsonesc=: 3 : 0
+txt=. y
+msk=. txt e. JSONESC0
+if. 1 e. msk do.
+  ndx=. , ((I. msk) + i. +/ msk) +/ 0 1
+  new=. , '\',.JSONESC1 {~ JSONESC0 i. msk#txt
+  txt=. new ndx } (1 + msk) # txt
+end.
+txt
+)
 classes=. 3<. '"\[],{}:' (#@[ |&>: i.) a.
 classes=. 0 (I.a.e.' ',CRLF,TAB)} (]+4*0=])classes
 
@@ -13,21 +65,13 @@ words=: (0;(0 10#:10*".;._2]0 :0);classes)&;:
   0.3  1.2  2.2  3.2  4.2
   1.0  1.0  1.0  1.0  1.0
 )
-
-tokens=. ;:'[ ] , { } :'
-actions=: lBra`rBracket`comma`lBra`rBracket`colon`value
-dec_json=: 0 {:: (,a:) ,&.> [: actions @.(tokens&i.@[)/ [:|.a:,words
-
-lBra=: a: ,~ ]
-rBracket=: _2&}.@], [:< _2&{::@], _1&{@]
-comma=: ]
-rBrace=: _2&}.@], [:< _2&{::@], [:|: (2,~ [: -:@$ _1&{@]) $ _1&{@]
-colon=: ]
-value=: _1&}.@], [:< _1&{::@], jsonValue&.>@[
 jsonValue=: 3 : 0
-if. '"'={. y do. evalbs }.}:y
-elseif. 'true'-:y do. 1
-elseif. 'false'-:y do. 0
+if. 0=#y do. <y
+elseif. 'true'-:y do. 'json_true'
+elseif. 'false'-:y do. 'json_false'
+elseif. 'null'-:y do. 'json_null'
+elseif. '"'={. y do. evalbs }.}:y
+elseif. '0123456789.+-' -.@e.~ {. y do. evalbs y
 elseif. do. {. 0". 'Ee-_' charsub y
 end.
 )
@@ -47,5 +91,58 @@ splitbs=: (0;(0 10#:10*".;._2]0 :0);(a.e.hexchars)+(2*a.='\')+3*a.e.'Uu')&;:
  1.2  3.0  2.2 1.2
 )
 evalbs=: [:; [:subst2 [:subst6 splitbs^:(*@#)
+'T_LBR T_RBR T_LCB T_RCB T_COM T_COL'=: ;:' [ ] { } , :'
+
+token=: 3 : 0
+(_1+I=: I+1){::T
+)
+
+dec_json=: 3 : 0
+T=: words y rplc LF;' '
+I=: 0
+>getVal token''
+)
+getVal=: 3 : 0
+select. y
+case. T_LBR do. getList token''
+case. T_LCB do. getHash token''
+case. do. <jsonValue y
+end.
+)
+getList=: 3 : 0
+if. T_RBR -: y do. <0#<'' return. end.
+r=. ,getVal y
+while. -. T_RBR -: y=. token'' do.
+  assert T_COM -: y
+  r=. r,getVal token''
+end.
+<r
+)
+getHash=: 3 : 0
+if. T_RCB -: y do. <0#0 0$<'' return. end.
+r=. getPair y
+while. -. T_RCB -: y=. token'' do.
+  assert T_COM -: y
+  r=. r,.getPair token''
+end.
+<r
+)
+getPair=: 3 : 0
+h=. getVal y
+assert T_COL -: token''
+h,: getVal token''
+)
+gethash_json=: 4 : 0
+assert. 2=$$y
+assert. 32=3!:0 y
+x=. boxopen x
+assert. 1=$x
+if. ({.x) e. {.y do.
+  ({:y){~({.y) i. {.x
+else.
+  _1
+end.
+)
 dec_json_z_=: dec_json_json_
 enc_json_z_=: enc_json_json_
+gethash_json_z_=: gethash_json_json_

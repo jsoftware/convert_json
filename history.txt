@@ -1,4 +1,4 @@
-convert/gtkdoctag - change history
+convert/json - change history
 
 == 1.0.0 ==
  * initial import

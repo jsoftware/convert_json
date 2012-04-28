@@ -4,9 +4,11 @@ CAPTION=: 'json'
 
 DESCRIPTION=: 0 : 0
 json encoder/decoder.
+
+http://json.org/
 )
 
-VERSION=: ''
+VERSION=: '1.0.0'
 
 RELEASE=: 'j602 j701'
 
