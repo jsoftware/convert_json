@@ -6,3 +6,6 @@ convert/json - change history
 == 1.0.1 ==
  * escape non-ascii
  * add verbs emptyhash_json emptyarray_json
+
+== 1.0.2 ==
+ * gethash_json ravel key

@@ -139,7 +139,7 @@ h,: getVal token''
 gethash_json=: 4 : 0
 assert. 2=$$y
 assert. 32=3!:0 y
-x=. boxopen x
+x=. ,&.> boxopen x
 assert. 1=$x
 if. ({.x) e. {.y do.
   ({:y){~({.y) i. {.x
