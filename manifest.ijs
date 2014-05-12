@@ -15,4 +15,3 @@ RELEASE=: 'j802'
 FILES=: 0 : 0
 json.ijs
 )
-PLATFORMS=: 'linux win darwin android'
