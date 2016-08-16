@@ -1,12 +1,12 @@
 coclass 'json'
 enc_json=: 3 : 0
 select. t=. 3!:0 y
-case. 2;131072 do.
+case. 2;131072;262144 do.
   if. y-:'json_true' do. 'true'
   elseif. y-:'json_false' do. 'false'
   elseif. y-:'json_null' do. 'null'
   elseif. do.
-    '"', '"',~ jsonesc utf8^:(131072=t) ,y
+    '"', '"',~ jsonesc utf8^:(2~:t) ,y
   end.
 case. 1;4;8 do.
   ":!.17 {.,y
