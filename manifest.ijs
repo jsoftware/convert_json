@@ -10,7 +10,9 @@ http://json.org/
 
 VERSION=: '1.0.10'
 
-RELEASE=: 'j802 j803 j804 j805 j806 j807'
+RELEASE=: ''
+
+FOLDER=: 'convert/json'
 
 FILES=: 0 : 0
 json.ijs

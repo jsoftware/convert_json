@@ -1,0 +1,10 @@
+NB. project: ~Addons/convert/json/source
+NB.
+NB. defines list of source files.
+NB. path defaults to project directory.
+
+init.ijs
+encoder.ijs
+decoder.ijs
+util.ijs
+zdefs.ijs
